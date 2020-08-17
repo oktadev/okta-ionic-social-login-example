@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ProtectedComponent } from './protected.component';
 import { LoginComponent } from './login.component';
+import { CallbackComponent } from './callback.component';
 
 import {
   OKTA_CONFIG,
@@ -12,9 +13,8 @@ import {
 
 const config = {
   issuer: 'https://dev-133320.okta.com/oauth2/default',
-  redirectUri: 'http://localhost:4200/callback',
-  clientId: '0oa55giv775Ul3LHL357',
-  pkce: true
+  redirectUri: 'com.okta.dev-133320:/callback',
+  clientId: '0oa55hiastFfpXHCv357'
 }
 
 export function onAuthRequired({ oktaAuth, router }) {
@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: OktaCallbackComponent
+    component: CallbackComponent
   },
   {
     path: 'login',

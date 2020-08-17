@@ -15,9 +15,13 @@ export class LoginComponent {
   signIn;
   widget = new OktaSignIn({
     baseUrl: 'https://dev-133320.okta.com',
-    authParams: {
-      pkce: true
-    }
+    clientId: '0oa55hiastFfpXHCv357',
+    redirectUri: 'com.okta.dev-133320:/callback',
+    //authParams: {
+    //  issuer: "https://dev-133320.okta.com/oauth2/default",
+    //  responseType: ['token', 'id_token'],
+    //  display: 'page'
+    //}
   });
 
   constructor(oktaAuth: OktaAuthService, router: Router) {
@@ -38,20 +42,27 @@ export class LoginComponent {
       }
     });
   }
-
+  
   ngOnInit() {
-    this.widget.renderEl({
-      el: '#okta-signin-container'},
-      (res) => {
-        if (res.status === 'SUCCESS') {
-          this.signIn.loginRedirect('/', { sessionToken: res.session.token });
-          // Hide the widget
-          this.widget.hide();
-        }
-      },
-      (err) => {
-        throw err;
-      }
-    );
+
+        // There are no tokens in the URL, render the Sign-In Widget.
+        this.widget.renderEl({
+            el: '#okta-signin-container'},
+            (res) => {
+                console.log('res', res);
+                if (res.status === 'SUCCESS') {
+                    console.log('Do something with this sessionToken', res.session.token);
+                  } else {
+                  // The user can be in another authentication state that requires further action.
+                  // For more information about these states, see:
+                  //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
+                  }
+            },
+            (err) => {
+              throw err;
+            }
+          );
+
+    
   }
 }
