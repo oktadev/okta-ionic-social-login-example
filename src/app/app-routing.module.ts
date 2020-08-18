@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes, Router } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ProtectedComponent } from './protected.component';
-import { LoginComponent } from './login.component';
-import { CallbackComponent } from './callback.component';
 
 import {
   OKTA_CONFIG,
@@ -14,14 +12,9 @@ import {
 const config = {
   issuer: 'https://dev-133320.okta.com/oauth2/default',
   redirectUri: 'com.okta.dev-133320:/callback',
+  //redirectUri: window.location.origin + '/callback',
   clientId: '0oa55hiastFfpXHCv357'
 };
-
-export function onAuthRequired(oktaAuth, injector) {
-  const router = injector.get(Router);
-  // Redirect the user to your custom login page
-  router.navigate(['/login']);
-}
 
 const routes: Routes = [
   {
@@ -30,19 +23,12 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: CallbackComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
+    component: OktaCallbackComponent
   },
   {
     path: 'protected',
     component: ProtectedComponent,
-    canActivate: [ OktaAuthGuard ],
-    data: {
-      onAuthRequired
-    }
+    canActivate: [ OktaAuthGuard ]
   }
 ];
 

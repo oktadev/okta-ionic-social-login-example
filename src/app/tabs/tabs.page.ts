@@ -9,8 +9,4 @@ export class TabsPage {
 
   constructor() {}
 
-  ionViewDidEnter() {
-    console.log('tabs page here...');
-  }
-
 }

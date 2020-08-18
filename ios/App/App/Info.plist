@@ -26,6 +26,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>capacitor</string>
+				<string>com.okta.dev-133320</string>
 			</array>
 		</dict>
 	</array>

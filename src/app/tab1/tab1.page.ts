@@ -24,12 +24,11 @@ export class Tab1Page implements OnInit {
   }
 
   login() {
-    this.oktaAuth.loginRedirect('/profile');
+    this.oktaAuth.loginRedirect();
   }
 
   async logout() {
     // Terminates the session with Okta and removes current tokens.
-    await this.oktaAuth.logout({idToken: false});
-    //this.router.navigateByUrl('/');
+    await this.oktaAuth.logout();
   }
 }
