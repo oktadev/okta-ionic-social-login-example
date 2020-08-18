@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes, Router } from '@angular/router';
 import { ProtectedComponent } from './protected.component';
 import { LoginComponent } from './login.component';
-import { CallbackComponent } from './callback.component';
 
 import {
   OKTA_CONFIG,
@@ -30,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: CallbackComponent
+    component: OktaCallbackComponent
   },
   {
     path: 'login',

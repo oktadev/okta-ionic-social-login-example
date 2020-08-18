@@ -24,7 +24,7 @@ export class Tab1Page implements OnInit {
   }
 
   login() {
-    this.oktaAuth.loginRedirect('/profile');
+    this.oktaAuth.loginRedirect('/');
   }
 
   async logout() {
