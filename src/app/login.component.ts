@@ -1,36 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart} from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 import { OktaAuthService } from '@okta/okta-angular';
 import * as OktaSignIn from '@okta/okta-signin-widget';
+import { AccessToken, IDToken } from '@okta/okta-angular/src/okta/models/token-manager';
 
 @Component({
   selector: 'app-secure',
   template: `
     <!-- Container to inject the Sign-In Widget -->
-    <div id="okta-signin-container"></div>
-  `
+    <div id="okta"></div>
+  `,
+  styleUrls: ['login.component.scss']
 })
-export class LoginComponent {
-  signIn;
+export class LoginComponent implements OnInit {
+
   widget = new OktaSignIn({
     baseUrl: 'https://dev-133320.okta.com',
-    clientId: '0oa55hiastFfpXHCv357',
-    redirectUri: 'com.okta.dev-133320:/callback',
-    //authParams: {
-    //  issuer: "https://dev-133320.okta.com/oauth2/default",
-    //  responseType: ['token', 'id_token'],
-    //  display: 'page'
-    //}
+    clientId: '0oa55giv775Ul3LHL357',
+    redirectUri: window.location.origin + '/callback'
   });
 
-  constructor(oktaAuth: OktaAuthService, router: Router) {
-    this.signIn = oktaAuth;
+  constructor(private oktaAuth: OktaAuthService, private router: Router, private ngZone: NgZone) {
 
     // Show the widget when prompted, otherwise remove it from the DOM.
     router.events.forEach(event => {
       if (event instanceof NavigationStart) {
-        switch(event.url) {
+        switch (event.url) {
           case '/login':
             break;
           case '/protected':
@@ -42,27 +38,22 @@ export class LoginComponent {
       }
     });
   }
-  
+
   ngOnInit() {
-
-        // There are no tokens in the URL, render the Sign-In Widget.
-        this.widget.renderEl({
-            el: '#okta-signin-container'},
-            (res) => {
-                console.log('res', res);
-                if (res.status === 'SUCCESS') {
-                    console.log('Do something with this sessionToken', res.session.token);
-                  } else {
-                  // The user can be in another authentication state that requires further action.
-                  // For more information about these states, see:
-                  //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
-                  }
-            },
-            (err) => {
-              throw err;
-            }
-          );
-
-    
+    // There are no tokens in the URL, render the Sign-In Widget.
+    this.widget.renderEl({el: '#okta'}, async (res) => {
+        if (res.status === 'SUCCESS') {
+          this.oktaAuth.getTokenManager().add('accessToken', res.tokens.accessToken as AccessToken);
+          this.oktaAuth.getTokenManager().add('idToken', res.tokens.idToken as IDToken);
+          this.ngZone.run(() => {
+            this.widget.hide();
+            this.router.navigate(['/'], { replaceUrl: true });
+          });
+          //this.oktaAuth.handleAuthentication();
+        }
+      }, (err) => {
+        throw err;
+      }
+    );
   }
 }
