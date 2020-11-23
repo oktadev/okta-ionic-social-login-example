@@ -16,8 +16,9 @@ export class LoginComponent implements OnInit {
 
   widget = new OktaSignIn({
     baseUrl: 'https://dev-133320.okta.com',
-    clientId: '0oa55giv775Ul3LHL357',
-    redirectUri: window.location.origin + '/callback'
+    clientId: '0oa6hazsl3RO9CcHi357',
+    redirectUri: 'com.okta.dev-133320:/callback'
+    //redirectUri: window.location.origin + '/callback'
   });
 
   constructor(private oktaAuth: OktaAuthService, private router: Router, private ngZone: NgZone) {
