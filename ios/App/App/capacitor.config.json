@@ -1,17 +1,13 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "ionic-social",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {},
-  "server": {
-    "iosScheme": "https",
-    "androidScheme": "https"
-  }
+	"appId": "io.ionic.starter",
+	"appName": "ionic-social",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
 }

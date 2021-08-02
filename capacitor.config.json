@@ -9,9 +9,5 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {},
-  "server": {
-    "iosScheme": "https",
-    "androidScheme": "https"
-  }
+  "cordova": {}
 }

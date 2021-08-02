@@ -11,9 +11,9 @@ import {
 } from '@okta/okta-angular';
 
 const config = {
-  issuer: 'https://dev-133320.okta.com/oauth2/default',
-  redirectUri: 'com.okta.dev-133320:/callback',
-  clientId: '0oa55hiastFfpXHCv357'
+  issuer: 'https://dev-2530788.okta.com/oauth2/default',
+  redirectUri: 'com.okta.dev-2530788:/callback',
+  clientId: '0oa1e99tacCh5DE7I5d7'
 };
 
 export function onAuthRequired(oktaAuth, injector) {

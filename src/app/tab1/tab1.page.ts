@@ -14,7 +14,7 @@ export class Tab1Page implements OnInit {
   constructor(public oktaAuth: OktaAuthService, public router: Router) {
     // Subscribe to authentication state changes
     this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
     );
   }
 
@@ -23,13 +23,13 @@ export class Tab1Page implements OnInit {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
   }
 
-  login() {
-    this.oktaAuth.loginRedirect('/');
+  async login() {
+    await this.oktaAuth.signInWithRedirect();
   }
 
   async logout() {
     // Terminates the session with Okta and removes current tokens.
-    await this.oktaAuth.logout({idToken: false});
+    await this.oktaAuth.signOut({idToken: false});
     //this.router.navigateByUrl('/');
   }
 }

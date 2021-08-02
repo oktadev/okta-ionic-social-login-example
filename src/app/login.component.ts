@@ -15,10 +15,10 @@ import * as OktaSignIn from '@okta/okta-signin-widget';
 export class LoginComponent implements OnInit {
 
   widget = new OktaSignIn({
-    baseUrl: 'https://dev-133320.okta.com',
-    clientId: '0oa6hazsl3RO9CcHi357',
-    redirectUri: 'com.okta.dev-133320:/callback'
-    //redirectUri: window.location.origin + '/callback'
+    el: '#okta',
+    baseUrl: 'https://dev-2530788.okta.com',
+    clientId: '0oa1e99tacCh5DE7I5d7',
+    redirectUri: 'com.okta.dev-2530788:/callback'
   });
 
   constructor(private oktaAuth: OktaAuthService, private router: Router, private ngZone: NgZone) {
@@ -41,19 +41,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // There are no tokens in the URL, render the Sign-In Widget.
-    this.widget.renderEl({el: '#okta'}, async (res) => {
-        if (res.status === 'SUCCESS') {
-          this.oktaAuth.getTokenManager().add('accessToken', res.tokens.accessToken);
-          this.oktaAuth.getTokenManager().add('idToken', res.tokens.idToken);
-          this.ngZone.run(() => {
-            this.widget.hide();
-            this.router.navigate(['/'], {replaceUrl: true});
-          });
-          //this.oktaAuth.handleAuthentication();
-        }
-      }, (err) => {
-        throw err;
+    this.widget.showSignInToGetTokens({
+      scopes: ['openid', 'profile']
+    }).then(tokens => {
+        console.log('tokens', tokens);
+        alert('success!');
       }
-    );
+    ).catch(error => {
+      alert('error:' + error);
+    });
+
   }
 }
