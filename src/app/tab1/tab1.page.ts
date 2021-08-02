@@ -23,12 +23,12 @@ export class Tab1Page implements OnInit {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
   }
 
-  login() {
-    this.oktaAuth.loginRedirect();
+  async login() {
+    await this.oktaAuth.signInWithRedirect();
   }
 
   async logout() {
     // Terminates the session with Okta and removes current tokens.
-    await this.oktaAuth.logout();
+    await this.oktaAuth.signOut();
   }
 }
