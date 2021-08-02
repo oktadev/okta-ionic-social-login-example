@@ -9,11 +9,13 @@ import {
   OktaAuthGuard
 } from '@okta/okta-angular';
 
+const redirectScheme = window.location.origin.includes('capacitor://') ?
+  'com.okta.dev-2530788:' : window.location.origin;
+
 const config = {
-  issuer: 'https://dev-133320.okta.com/oauth2/default',
-  redirectUri: 'com.okta.dev-133320:/callback',
-  //redirectUri: window.location.origin + '/callback',
-  clientId: '0oa55hiastFfpXHCv357'
+  issuer: 'https://dev-2530788.okta.com/oauth2/default',
+  redirectUri: redirectScheme + '/callback',
+  clientId: '0oa1e99tacCh5DE7I5d7'
 };
 
 const routes: Routes = [
